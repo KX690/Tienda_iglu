@@ -1,4 +1,4 @@
-# Pingu Admin Panel
+# Tienda_iglu Admin Panel
 
 Este es un panel de administración para gestionar productos y órdenes en una tienda en línea. Permite a los administradores iniciar sesión, registrar nuevos administradores, y gestionar productos y órdenes.
 
@@ -11,14 +11,16 @@ Este es un panel de administración para gestionar productos y órdenes en una t
 
 1. **Clona el repositorio:**
 
-   ```bash
+   ```
+   bash
    git clone https://github.com/tu_usuario/Pingu_store.git
-   cd Pingu_store/Pingu_admin
+   cd Backend_panel_admin
    ```
 
 2. **Instala las dependencias:**
 
-   ```bash
+   ```
+   bash
    npm install
    ```
 
