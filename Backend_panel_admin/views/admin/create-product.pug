@@ -1,0 +1,66 @@
+extends ../layouts/admin
+
+block content
+  h1= product ? 'Editar Producto' : 'Nuevo Producto'
+  
+  form#productForm(action=product ? `/admin/products/edit/${product._id}` : "/admin/products/create" method="POST")
+    .form-group
+      label(for="name") Nombre
+      input(type="text" name="name" id="name" value=product ? product.name : '' required)
+    
+    .form-group
+      label(for="price") Precio
+      input( type="number" name="price" id="price" step="0.01" value=product ? product.price : '' required)
+    
+    .form-group
+      label(for="description") Descripción
+      textarea(name="description" id="description")= product ? product.description : ''
+    
+    .form-group
+      label(for="stock") Stock
+      input(type="number" name="stock" id="stock" value=product ? product.stock : 0)
+    
+    .form-group
+      label(for="image") Imagen URL
+      input(type="text" name="image" id="image" value=product ? product.image : '')
+    
+    button.btn.primary(type="submit")= product ? 'Actualizar' : 'Crear'
+    a.btn(href="/admin/products") Cancelar 
+
+block scripts
+  script.
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const token = localStorage.getItem('token');
+      const url = new URL(e.target.action, window.location.origin);
+      url.searchParams.append('token', token);
+
+      // Convertir FormData a objeto
+      const productData = {
+        name: formData.get('name'),
+        price: Number(formData.get('price')),
+        description: formData.get('description'),
+        stock: Number(formData.get('stock')),
+        image: formData.get('image')
+      };
+
+      try {
+        const response = await fetch(url.toString(), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(productData)
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || 'Error al procesar el producto');
+        }
+        
+        window.location.href = `/admin/products?token=${token}`;
+      } catch (error) {
+        alert(error.message);
+      }
+    }); 

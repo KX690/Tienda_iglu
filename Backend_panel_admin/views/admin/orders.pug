@@ -1,0 +1,42 @@
+extends ../layouts/admin
+
+block content
+  h1 Órdenes
+  
+  if orders.length
+    table.orders-table
+      thead
+        tr
+          th ID
+          th Cliente
+          th Total
+          th Estado
+          th Fecha
+          th Acciones
+      tbody
+        each order in orders
+          tr
+            td= order._id
+            td= order.customer.name
+            td= order.total
+            td= order.status
+            td= new Date(order.createdAt).toLocaleDateString()
+            td
+              a.btn.order-details(href=`/admin/orders/${order._id}`) Ver detalles
+  else
+    p No hay órdenes registradas. 
+
+block scripts
+  script.
+    // Agregar token a los enlaces de detalles
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      // Actualizar enlaces
+      document.querySelectorAll('a[href^="/admin"]').forEach(link => {
+        const url = new URL(link.href, window.location.origin);
+        url.searchParams.append('token', token);
+        link.href = url.toString();
+      });
+    }); 

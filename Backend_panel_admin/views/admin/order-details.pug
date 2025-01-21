@@ -1,0 +1,78 @@
+extends ../layouts/admin
+
+block content
+  h1 Detalles de Orden
+  
+  .order-info
+    h2 Cliente
+    p
+      strong Nombre: 
+      span= order.customer.name
+    p
+      strong Email: 
+      span= order.customer.email
+    p
+      strong Teléfono: 
+      span= order.customer.phone
+    p   
+      strong Dirección: 
+      span= order.customer.address
+  
+  .order-products
+    h2 Productos
+    table
+      thead
+        tr
+          th Producto
+          th Cantidad
+          th Precio
+          th Subtotal
+      tbody
+        each item in order.products
+          tr
+            td= item.product.name
+            td= item.quantity
+            td= item.price
+            td= item.quantity * item.price
+    
+    .order-total
+      strong Total: 
+      span= order.total
+  
+  .order-status
+    h2 Estado
+    form#statusForm(action=`/admin/orders/${order._id}/status` method="POST")
+      select(name="status" id="status")
+        each status in ['pendiente', 'pagado', 'entregado', 'cancelado']
+          option(
+            value=status 
+            selected=order.status === status
+          )= status
+      button.btn.primary(type="submit") Actualizar Estado
+
+block scripts
+  script.
+    document.getElementById('statusForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+      const form = e.target;
+      const status = form.querySelector('#status').value;
+      
+      const url = form.action + `?token=${token}`;
+
+      try {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ status: status })
+        })
+        .then(() => window.location.href = `/admin/orders?token=${token}`);
+
+        
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    }); 

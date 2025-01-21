@@ -1,0 +1,65 @@
+extends ../layouts/admin
+
+block content
+  .login-form
+    h1 Iniciar Sesión
+    
+    if error
+      .alert.alert-error= error
+    
+    form#loginForm(action="/admin/login" method="POST")
+      .form-group
+        label(for="email") Email
+        input(type="email" name="email" id="email" required)
+      
+      .form-group
+        label(for="password") Contraseña
+        input(type="password" name="password" id="password" required)
+      
+      button.btn.primary(type="submit") Ingresar
+      
+      .form-footer
+        p ¿No tienes cuenta? 
+          a(href="/admin/register") Regístrate aquí
+
+block scripts
+  script.
+    // Limpiar token existente al cargar la página de login
+    document.addEventListener('DOMContentLoaded', () => {
+      localStorage.removeItem('token');
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      try {
+        const formData = new FormData(e.target);
+        const response = await fetch('/admin/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            email: formData.get('email'),
+            password: formData.get('password')
+          })
+        });
+
+        const data = await response.json();
+      
+        if (!response.ok) {
+          throw new Error(data.error || 'Error al iniciar sesión');
+        }
+      
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          // Agregar token a la URL de redirección
+          const redirectUrl = new URL(data.redirect, window.location.origin);
+          redirectUrl.searchParams.append('token', data.token);
+          window.location.href = redirectUrl.toString();
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    });

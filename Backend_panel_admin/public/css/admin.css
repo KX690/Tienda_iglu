@@ -1,0 +1,203 @@
+/* Variables */
+:root {
+  --primary: #3498db;
+  --danger: #e74c3c;
+  --success: #2ecc71;
+  --gray: #95a5a6;
+  --dark: #2c3e50;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: #f5f6fa;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navegación */
+.admin-nav {
+  background: var(--dark);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.admin-nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+/* Formularios */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Estilos generales para botones */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff; /* Color de fondo */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+.btn.primary {
+    background-color: #28a745; /* Color verde para botones primarios */
+}
+
+.btn.primary:hover {
+    background-color: #218838; /* Color verde oscuro al pasar el mouse */
+}
+
+.btn.edit-btn {
+    background-color: #ffc107; /* Color amarillo para editar */
+}
+
+.btn.edit-btn:hover {
+    background-color: #e0a800; /* Color amarillo oscuro al pasar el mouse */
+}
+
+.btn.danger {
+    background-color: #dc3545; /* Color rojo para botones de peligro */
+}
+
+.btn.danger:hover {
+    background-color: #c82333; /* Color rojo oscuro al pasar el mouse */
+}
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #f8f9fa;
+}
+
+/* Alertas */
+.alert {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.alert-error {
+  background: #fee;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+/* Login */
+.login-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Productos */
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.products-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Órdenes */
+.order-info {
+  background: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.order-total {
+  text-align: right;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.order-status {
+  margin-top: 2rem;
+}
+
+/* Login y Register */
+.login-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-footer {
+  margin-top: 1rem;
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
+.form-footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+} 

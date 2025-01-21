@@ -1,0 +1,36 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Admin Panel
+    link(rel="stylesheet" href="/css/admin.css")
+  body
+    nav.admin-nav
+      .container#navContainer
+        a(href="/admin/products") Productos
+        a(href="/admin/orders") Órdenes
+        if user
+          span Bienvenido #{user.name}
+          a(href="/admin/logout") Cerrar sesión
+    
+    main.container
+      if error
+        .alert.alert-error= error
+      block content
+
+    // Bloque para scripts adicionales
+    block scripts
+      script(src="/js/admin.js")
+      script.
+        // Agregar token a los enlaces de navegación
+        document.addEventListener('DOMContentLoaded', () => {
+          const token = localStorage.getItem('token');
+          if (!token) return;
+
+          document.querySelectorAll('#navContainer a[href^="/admin"]').forEach(link => {
+            const url = new URL(link.href, window.location.origin);
+            url.searchParams.append('token', token);
+            link.href = url.toString();
+          });
+        });

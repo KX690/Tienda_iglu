@@ -1,0 +1,64 @@
+extends ../layouts/admin
+
+block content
+  .products-header
+    h1 Productos
+    a.btn.primary#newProductBtn(href="/admin/products/create") Nuevo Producto
+
+  if products.length
+    table.products-table
+      thead
+        tr
+          th Imagen
+          th Nombre
+          th Precio
+          th Stock
+          th Acciones
+      tbody
+        each product in products
+          tr
+            td
+              if product.image
+                img(src=product.image alt=product.name)
+            td= product.name
+            td= product.price
+            td= product.stock
+            td.actions
+              a.btn.edit-btn(href=`/admin/products/edit/${product._id}`) Editar
+              form.delete-form(action=`/admin/products/delete/${product._id}` method="POST")
+                button.btn.danger(type="submit") Eliminar
+  else
+    p No hay productos registrados. 
+
+block scripts
+  script.
+    // Agregar token a todos los enlaces
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      
+      // Actualizar enlaces
+      document.querySelectorAll('a[href^="/admin"]').forEach(link => {
+        const url = new URL(link.href, window.location.origin);
+        url.searchParams.append('token', token);
+        link.href = url.toString();
+      });
+
+      // Manejar formularios de eliminación
+      document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+
+          const url = new URL(e.target.action, window.location.origin);
+          url.searchParams.append('token', token);
+
+          try {
+            const response = await fetch(url.toString(), { method: 'POST' });
+            if (!response.ok) throw new Error('Error al eliminar producto');
+            window.location.reload();
+          } catch (error) {
+            alert(error.message);
+          }
+        });
+      });
+    }); 
