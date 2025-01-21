@@ -13,7 +13,7 @@ Este es un panel de administración para gestionar productos y órdenes en una t
 
    ```
    bash
-   git clone https://github.com/tu_usuario/Pingu_store.git
+   git clone 
    cd Backend_panel_admin
    ```
 
